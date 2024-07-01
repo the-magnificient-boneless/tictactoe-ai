@@ -37,6 +37,8 @@ export default function TicTacToe() {
 		roundsPlayed === 0 ? Number(localStorage.getItem('draws')) : 0,
 	)
 	const [lastPlayerMove, setLastPlayerMove] = useState<number | null>(null)
+	const [showEndingScreen, setShowEndingScreen] = useState(false);
+
 
 	const boxRef = useRef<Array<RefObject<HTMLDivElement>>>(
 		Array(9)
@@ -116,7 +118,7 @@ export default function TicTacToe() {
 				}
 				setTimeout(() => {
 					setShowModal(true)
-				}, 1500)
+				}, 1000)
 				return
 			}
 		}
@@ -130,7 +132,7 @@ export default function TicTacToe() {
 			localStorage.setItem('draws', newDraws.toString())
 			setTimeout(() => {
 				setShowModal(true)
-			}, 1500)
+			}, 1000)
 		}
 
 		if (moveCount === 0 && currentPlayer === PLAYER.AI && !winner) {
@@ -139,6 +141,16 @@ export default function TicTacToe() {
 			setTimeout(aiMove, 500)
 		}
 	}, [board, moveCount, scoreA, scoreB, draws, winnerDeclared])
+
+	useEffect(() => {
+        if (roundsPlayed === totalRoundsToPlay && showModal) {
+            const timer = setTimeout(() => {
+                setShowEndingScreen(true);
+            }, 2000); // 2 seconds delay
+
+            return () => clearTimeout(timer); // Cleanup on component unmount
+        }
+    }, [roundsPlayed, showModal, totalRoundsToPlay]);
 
 	const handleGameStart = (
 		totalRoundsToPlay: number,
@@ -260,6 +272,7 @@ export default function TicTacToe() {
 		setWinner(null)
 		setWinnerDeclared(false)
 		setShowModal(false)
+		setShowEndingScreen(false)
 		playerRef.current.forEach((el) =>
 			el?.current?.classList.remove('bouncein'),
 		)
@@ -287,6 +300,7 @@ export default function TicTacToe() {
 		setWinner(null)
 		setWinnerDeclared(false)
 		setShowModal(false)
+		setShowEndingScreen(false)
 		playerRef.current.forEach((el) =>
 			el?.current?.classList.remove('bouncein'),
 		)
@@ -298,11 +312,11 @@ export default function TicTacToe() {
 	}
 
 	return totalRoundsToPlay === 0 ? (
-		<GameConfig
-			onStart={handleGameStart}
-			onHandleClickButton={handleResetMatch}
-		/>
-	) : (
+        <GameConfig
+            onStart={handleGameStart}
+            onHandleClickButton={handleResetMatch}
+        />
+    ) : (
 		<>
 			<section className="card">
 				<div>
@@ -388,13 +402,14 @@ export default function TicTacToe() {
 					onHandleClickButton={handleResetRound}
 				/>
 			)}
-			{roundsPlayed === totalRoundsToPlay && (
-				<EndingScreen
-					player={PLAYER}
-					scores={[scoreA, scoreB]}
-					onHandleClickButton={handleResetMatch}
-				/>
-			)}
+			 {/* Conditional Rendering of EndingScreen */}
+			 {showEndingScreen && (
+                <EndingScreen
+                    player={PLAYER}
+                    scores={[scoreA, scoreB]}
+                    onHandleClickButton={handleResetMatch}
+                />
+            )}
 		</>
 	)
 }
