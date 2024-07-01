@@ -8,7 +8,7 @@
 		"start": "vite",
 		"dev": "nodemon --watch src/utils/${file} --exec \"tsx src/utils/${file}\" --verbose -e ts",
 		"test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
-		"build": "tsc && vite build && rm -rf .vercel/output/static && cp -r dist .vercel/output && mv .vercel/output .vercel/output/static",
+		"build": "tsc && vite build && rm -rf .vercel/output/static && cp -r dist .vercel/output && mv .vercel/output/dist .vercel/output/static",
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"lint:fix": "eslint . --ext ts,tsx --fix",
 		"preview": "vite preview",
