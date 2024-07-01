@@ -88,7 +88,6 @@ export default function TicTacToe() {
 				if (!winnerDeclared) {
 					setWinner(board[a])
 					setWinnerDeclared(true)
-					setShowModal(true)
 
 					boxRef.current.forEach((el) =>
 						el?.current?.classList.remove('box'),
@@ -115,6 +114,9 @@ export default function TicTacToe() {
 					}
 					setGamesPlayed(roundsPlayed + 1)
 				}
+				setTimeout(() => {
+					setShowModal(true)
+				}, 1500)
 				return
 			}
 		}
@@ -126,7 +128,9 @@ export default function TicTacToe() {
 			setDraws(newDraws)
 			setGamesPlayed(roundsPlayed + 1)
 			localStorage.setItem('draws', newDraws.toString())
-			setShowModal(true)
+			setTimeout(() => {
+				setShowModal(true)
+			}, 1500)
 		}
 
 		if (moveCount === 0 && currentPlayer === PLAYER.AI && !winner) {
