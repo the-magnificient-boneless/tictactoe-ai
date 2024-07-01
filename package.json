@@ -22,7 +22,8 @@
 	"license": "MIT",
 	"dependencies": {
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react-dom": "^18.2.0",
+		"typewriter-effect": "^2.21.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.8.1",

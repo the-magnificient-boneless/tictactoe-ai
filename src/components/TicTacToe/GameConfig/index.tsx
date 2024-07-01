@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import Typewriter from 'typewriter-effect/dist/core';
+
 import './GameConfig.css'
 
 type Player = '❌' | '⭕️' | string
@@ -9,11 +11,11 @@ interface GameConfigProps {
 }
 
 function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
-	const [totalRoundsToPlay, setTotalGames] = useState(3)
-	const [symbol, setSymbol] = useState('')
-	const [step, setStep] = useState(1)
-	const [label, setLabel] = useState('')
-	const [errorMessage, setErrorMessage] = useState('')
+	const [totalRoundsToPlay, setTotalGames] = useState(3);
+	const [symbol, setSymbol] = useState('');
+	const [step, setStep] = useState(1);
+	const [label, setLabel] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
 
 	const labels = [
 		'How many rounds until you claim victory?',
@@ -36,10 +38,22 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 		'How many rounds will it take to beat the AI?',
 		'Show your strategy: How many rounds will you win?',
 		'How many rounds will you claim as a champion?',
-	]
+	];
+
+	const typewriterRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
+
 		setLabel(labels[Math.floor(Math.random() * labels.length)])
+		
+		if (typewriterRef.current) {
+			new Typewriter(typewriterRef.current, {
+				strings: labels,
+				autoStart: true,
+				loop: true,
+				pauseFor:10000
+			});
+		}
 	}, [])
 
 	const handleStart = () => {
@@ -64,7 +78,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 				</p>
 				<h1>New match!</h1>
 				<div className={step === 1 ? 'bouncein' : 'hidden'}>
-					<h2>💬 {label}</h2>
+				<div style ={{fontSize:"1.5em"}}>💬 <span ref={typewriterRef}></span></div>
 					<label>
 						Rounds:&nbsp;
 						<input
