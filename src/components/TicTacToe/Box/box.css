@@ -1,0 +1,105 @@
+.box {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    border: 1px solid #ddd;
+    margin: 3px;
+    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    background-color: #e6e6e6;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.boxSelected {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    border: 1px solid #ddd;
+    margin: 3px;
+    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    background-color: #ddd;
+    cursor: pointer;
+    border-radius: 5px;
+
+}
+
+.box:hover {
+    background-color: red;
+}
+
+.boxed {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    border: 1px solid #ddd;
+    margin: 3px;
+    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    background-color: #b5b5b5;
+    cursor: pointer;
+    border-radius: 5px;
+
+}
+
+.winner {
+    background-color: #FFF !important;
+}
+
+
+@keyframes bouncein {
+
+    from,
+    20%,
+    80%,
+    to {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    40% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+.bouncein {
+    animation: bounce .4s ease-in;
+}
+
+@keyframes bounce {
+
+    0% {
+        opacity: 0;
+        transform: scale(.3);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    70% {
+        transform: scale(.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.bounce {
+    animation: bounce 1s ease-in;
+    animation-fill-mode: forwards;
+}
+

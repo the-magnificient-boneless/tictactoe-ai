@@ -1,0 +1,11 @@
+node_modules
+public
+dist
+.husky
+.vscode
+.github
+coverage
+README.md
+CHANGELOG.md
+**/*.css
+**/*.test.*

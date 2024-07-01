@@ -1,0 +1,91 @@
+.gameContainerConfig{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-config{
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+}
+input[type="number" i] {
+    padding-block: 1px;
+    padding-inline: 2px;
+    font-size: 1em;
+}
+
+.bouncein h2{
+    font-weight: normal;
+}
+@keyframes bouncein {
+
+    from,
+    20%,
+    80%,
+    to {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    40% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+.start{
+    padding: .5em 3.5em;
+    font-size: 2em;
+    border-radius: 0;
+}
+
+.steps{
+    padding: .5em .8em;
+    font-size: 2em;
+    border-radius: 0;
+    color: #a3a3a3;
+    background-color: #484848;
+    opacity: 0.3;
+}
+.steps:hover{
+    opacity: 1;
+}
+.bouncein {
+    animation: bounce .4s ease-in;
+}
+.slide-in {
+    position: absolute; /* Absolute positioning is needed for animation */
+    animation: slide-in 1s ease-in-out forwards; /* Animation properties */
+  }
+  
+  @keyframes slide-in {
+    0% {
+      transform: translateX(-100%); /* Start from 100% off-screen to the left */
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(-20%); /* Slide to the right to its original position */
+      opacity: 1;
+    }
+  }
+
+.hidden{
+    display: none;
+}
+.logo{
+    width: 400px
+}
+
+.btnPlayer{
+    padding: .2em .3em;
+    margin: 0 20px;
+    font-size: 5em;
+    background: rgb(255,255,255);
+background: -moz-radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(207,207,207,1) 99%);
+background: -webkit-radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(207,207,207,1) 99%);
+background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(207,207,207,1) 99%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#cfcfcf",GradientType=1);
+}
+
+

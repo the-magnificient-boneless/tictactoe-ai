@@ -1,0 +1,20 @@
+.endingContainer{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: rgb(255 255 255 / 0%);
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+.endingCard {
+    padding: 2em;
+  }
+.endingCard h1{
+    color: #FFF;
+}
+  

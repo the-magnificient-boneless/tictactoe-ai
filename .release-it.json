@@ -1,0 +1,16 @@
+{
+	"git": {
+		"commitMessage": "chore: release v${version}"
+	},
+	"hooks": {
+		"after:bump": ["npm run changelog"]
+	},
+	"github": {
+		"release": true,
+		"draft": false,
+		"releaseName": "Release v${version}",
+		"comments": {
+			"submit": true
+		}
+	}
+}
