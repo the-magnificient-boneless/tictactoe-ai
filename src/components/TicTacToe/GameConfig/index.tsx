@@ -330,6 +330,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						name="nombre"
 						value={formData.nombre}
 						onChange={handleChange}
+						className="textField"
 					/>
 					{errors.nombre && <span>{errors.nombre}</span>}
 				</div>
@@ -342,6 +343,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						name="email"
 						value={formData.email}
 						onChange={handleChange}
+						className="textField"
 					/>
 					{errors.email && <span>{errors.email}</span>}
 				</div>
@@ -370,6 +372,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 								name="nombreEmpresa"
 								value={formData.nombreEmpresa}
 								onChange={handleChange}
+								className="textField"
 							/>
 							{errors.nombreEmpresa && (
 								<span>{errors.nombreEmpresa}</span>
@@ -383,11 +386,12 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 								name="cargo"
 								value={formData.cargo}
 								onChange={handleChange}
+								className="textField"
 							/>
 						</div>
 					</>
 				)}
-				<button type="submit" onClick={handleSubmit}>
+				<button type="submit" className="btnYep" onClick={handleSubmit}>
 					{isLoading ? 'Guardando...' : 'Enviar'}
 				</button>
 			</form>
