@@ -5,7 +5,7 @@
 	"type": "module",
 	"private": true,
 	"scripts": {
-		"start": "npm run start:client",
+		"start": "vite",
 		"start:client": "vite --host",
 		"start:server": "nodemon server.js",
 		"build": "tsc && vite build && rm -rf .vercel/output/static && cp -r dist .vercel/output && mv .vercel/output/dist .vercel/output/static"
@@ -19,6 +19,7 @@
 		"express-rate-limit": "^7.3.1",
 		"express-validator": "^7.1.0",
 		"helmet": "^7.1.0",
+		"https": "^1.0.0",
 		"mongodb": "^6.8.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",

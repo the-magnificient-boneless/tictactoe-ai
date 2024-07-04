@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Typewriter from 'typewriter-effect/dist/core'
 import TypewriterComponent from '../Typewriter'
-import { MongoClient, ServerApiVersion } from 'mongodb'
 
 import './GameConfig.css'
 
@@ -38,8 +37,6 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 		}))
 	}
 
-	// Import MongoDB Client and Nodemailer
-
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		const validationErrors = validateForm()
@@ -48,47 +45,54 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 			const sanitizedFilename = sanitizeFilename('user_data.csv') // Sanitize and add timestamp
 			const csvData = {
 				data: Object.values(formData).join(','),
-				filename: sanitizedFilename,
+			}
+
+			const postData = {
+				dataSource: 'Cluster0',
+				collection: 'csvData',
+				database: 'tictactoe',
+				document: csvData, // Assuming you want to insert the CSV data as a document
 			}
 
 			try {
 				const response = await fetch(
-					'https://us-east-1.aws.data.mongodb-api.com/app/data-zlgaoxd/endpoint/data/v1/action/findOne',
+					'http://us-east-1.aws.data.mongodb-api.com/app/data-eviphyj/endpoint/data/v1/action/insertOne',
 					{
 						method: 'POST',
 						headers: {
+							apiKey: 's8QHGkHLPusaUszTrgAISLsymasmQmiufxYlctngOsERSgHuffrXMhcTmdhHT9ki',
 							'Content-Type': 'application/json',
+							Accept: 'application/json',
 							'Access-Control-Request-Headers': '*',
-							'api-key':
-								'kjINnVzjtmVJq9lxqEnBoZrFacILdS6N3N384zSi53b01dtKvInIN7MKGr0Ogl78',
 						},
-						body: JSON.stringify({
-							collection: 'csvData',
-							database: 'tictactoe',
-							dataSource: 'Cluster0',
-							projection: { _id: 1 },
-							document: csvData,
-						}),
+						body: JSON.stringify(postData),
 					},
 				)
 
-				if (!response.ok) {
-					throw new Error('Network response was not ok')
+				if (response.ok) {
+					const responseData = await response.json()
+					setShowForm(false)
+
+					console.log(
+						'Data sent and inserted successfully:',
+						responseData,
+					)
+					setIsLoading(false) // Hide loading state
+					setFormData({
+						nombre: '',
+						representaEmpresa: false,
+						nombreEmpresa: '',
+						cargo: '',
+						email: '',
+					})
+					setShowForm(false)
+				} else {
+					const errorData = await response.json()
+					console.error(
+						'Error saving data:',
+						errorData.errors || 'Unknown error',
+					)
 				}
-
-				const result = await response.json()
-				console.log('Data inserted into MongoDB:', result)
-
-				setIsLoading(false) // Hide loading state
-				setFormData({
-					nombre: '',
-					representaEmpresa: false,
-					nombreEmpresa: '',
-					cargo: '',
-					email: '',
-				})
-				setShowForm(false)
-				console.log('CSV data sent to server successfully')
 			} catch (error) {
 				console.error('Error submitting form or sending data:', error)
 			}
