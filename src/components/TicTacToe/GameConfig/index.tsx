@@ -39,44 +39,38 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
+
 		const validationErrors = validateForm()
 
 		if (Object.keys(validationErrors).length === 0) {
-			const sanitizedFilename = sanitizeFilename('user_data.csv') // Sanitize and add timestamp
-			const csvData = {
-				data: Object.values(formData).join(','),
-			}
-
-			const postData = {
-				dataSource: 'Cluster0',
-				collection: 'csvData',
-				database: 'tictactoe',
-				document: csvData, // Assuming you want to insert the CSV data as a document
-			}
-
 			try {
-				const response = await fetch(
-					'https://us-east-1.aws.data.mongodb-api.com/app/data-eviphyj/endpoint/data/v1/action/insertOne',
-					{
-						method: 'POST',
-						headers: {
-							apiKey: 's8QHGkHLPusaUszTrgAISLsymasmQmiufxYlctngOsERSgHuffrXMhcTmdhHT9ki',
-							'Content-Type': 'application/json',
-							Accept: 'application/json',
-						},
-						body: JSON.stringify(postData),
-						mode: 'no-cors',
-					},
-				)
+				// Step 1: Authenticate and Obtain Access Token
+				const accessToken = await authenticateWithApiKey()
 
-				if (response.ok) {
-					const responseData = await response.json()
-					setShowForm(false)
+				// Step 2: Insert Document using Access Token
+				if (accessToken) {
+					const sanitizedFilename = sanitizeFilename('user_data.csv') // Sanitize and add timestamp
+					const csvData = {
+						data: Object.values(formData).join(','),
+						filename: sanitizedFilename,
+					}
 
-					console.log(
-						'Data sent and inserted successfully:',
-						responseData,
+					const postData = {
+						dataSource: 'Cluster0',
+						collection: 'csvData',
+						database: 'tictactoe',
+						document: csvData,
+					}
+
+					const insertionResult = await insertDocument(
+						postData,
+						accessToken,
 					)
+					console.log(
+						'Document inserted successfully:',
+						insertionResult,
+					)
+
 					setIsLoading(false) // Hide loading state
 					setFormData({
 						nombre: '',
@@ -86,18 +80,80 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						email: '',
 					})
 					setShowForm(false)
-				} else {
-					const errorData = await response.json()
-					console.error(
-						'Error saving data:',
-						errorData.errors || 'Unknown error',
-					)
 				}
 			} catch (error) {
 				console.error('Error submitting form or sending data:', error)
+				// Handle errors accordingly, e.g., setErrors or display error message
 			}
 		} else {
 			setErrors(validationErrors)
+		}
+	}
+
+	// Function to authenticate using API key and obtain access token
+	const authenticateWithApiKey = async () => {
+		const authHeaders = new Headers()
+		authHeaders.append('Content-Type', 'application/json')
+
+		const authRaw = JSON.stringify({
+			key: 's8QHGkHLPusaUszTrgAISLsymasmQmiufxYlctngOsERSgHuffrXMhcTmdhHT9ki',
+		})
+
+		const authRequestOptions = {
+			method: 'POST',
+			headers: authHeaders,
+			body: authRaw,
+			redirect: 'follow',
+		}
+
+		try {
+			const response = await fetch(
+				'https://services.cloud.mongodb.com/api/client/v2.0/app/data-eviphyj/auth/providers/api-key/login',
+				authRequestOptions,
+			)
+
+			if (!response.ok) {
+				throw new Error('Failed to authenticate')
+			}
+
+			const authResult = await response.json()
+			return authResult.access_token // Return the access token
+		} catch (error) {
+			console.error('Error authenticating with API key:', error)
+			throw error // Propagate the error
+		}
+	}
+
+	// Function to insert a document using the access token
+	const insertDocument = async (postData, accessToken) => {
+		const myHeaders = new Headers()
+		myHeaders.append('Authorization', `Bearer ${accessToken}`)
+		myHeaders.append('Content-Type', 'application/json')
+
+		const raw = JSON.stringify(postData)
+
+		const requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: raw,
+			redirect: 'follow',
+		}
+
+		try {
+			const response = await fetch(
+				'https://data.mongodb-api.com/app/data-eviphyj/endpoint/data/v1/action/insertOne',
+				requestOptions,
+			)
+
+			if (!response.ok) {
+				throw new Error('Failed to insert document')
+			}
+
+			const insertionResult = await response.json()
+			return insertionResult // Return insertion result if needed
+		} catch (error) {
+			console.error('Error inserting document:', error)
+			throw error // Propagate the error
 		}
 	}
 
