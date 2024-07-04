@@ -39,7 +39,6 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		setShowForm(false)
 		const validationErrors = validateForm()
 
 		if (Object.keys(validationErrors).length === 0) {
@@ -82,6 +81,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 					setShowForm(false)
 				}
 			} catch (error) {
+				setShowForm(false)
 				console.error('Error submitting form or sending data:', error)
 				// Handle errors accordingly, e.g., setErrors or display error message
 			}
