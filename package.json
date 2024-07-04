@@ -7,7 +7,8 @@
 	"scripts": {
 		"start": "concurrently \"npm run start:client\" \"npm run start:server\"",
 		"start:client": "vite --host",
-		"start:server": "nodemon server.js"
+		"start:server": "nodemon server.js",
+		"build": "tsc && vite build && rm -rf .vercel/output/static && cp -r dist .vercel/output && mv .vercel/output/dist .vercel/output/static"
 	},
 	"keywords": [],
 	"author": "Gregorio Daniel Ayvar López",
