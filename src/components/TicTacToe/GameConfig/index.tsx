@@ -39,7 +39,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-
+		setShowForm(false)
 		const validationErrors = validateForm()
 
 		if (Object.keys(validationErrors).length === 0) {
@@ -410,11 +410,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 					</>
 				)}
 				<br />
-				<button
-					type="submit"
-					className="btnYep"
-					onClick={() => setShowForm(false)}
-				>
+				<button type="submit" className="btnYep">
 					{isLoading ? 'Guardando...' : 'Enviar'}
 				</button>
 			</form>
