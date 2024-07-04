@@ -107,8 +107,8 @@ export default function EndingScreen({
 			<section className="endingContainer">
 				<div className="endingCard">
 					<h2>
-						{scoreA < scoreB && <>!Haz perdido!</>}
 						{scoreA === scoreB && <>¡Es empate!</>}
+						{scoreA < scoreB && <>!Has perdido!</>}
 						{scoreA > scoreB && <>¡Vaya Ganaste!</>}
 					</h2>
 
