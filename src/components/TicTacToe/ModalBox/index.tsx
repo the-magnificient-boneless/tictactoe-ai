@@ -14,7 +14,9 @@ export default function Modal({ show, winner, onHandleClickButton }) {
 					{winner === 'Draw!' ? "It's a Draw!" : `Player ${winner}`}
 				</h2>
 				<h1>{winner === 'Draw!' ? '' : ` Wins!`}</h1>
-				<button onClick={onHandleClickButton}>Continue</button>
+				<button onClick={onHandleClickButton} className="btnYepModal">
+					Continue
+				</button>
 			</div>
 		</div>
 	)

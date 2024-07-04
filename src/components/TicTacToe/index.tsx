@@ -118,7 +118,7 @@ export default function TicTacToe() {
 					}
 					setTimeout(() => {
 						setGamesPlayed(roundsPlayed + 1)
-					}, 2000)
+					}, 1000)
 				}
 				return
 			}
@@ -131,13 +131,13 @@ export default function TicTacToe() {
 			setDraws(newDraws)
 			setTimeout(() => {
 				setGamesPlayed(roundsPlayed + 1)
-			}, 2000)
+			}, 1000)
 			localStorage.setItem('draws', newDraws.toString())
 			setWinnerDeclared(true)
 
 			setTimeout(() => {
 				setShowModal(true)
-			}, 2000)
+			}, 1000)
 		}
 
 		if (moveCount === 0 && currentPlayer === PLAYER.AI && !winner) {
@@ -395,7 +395,7 @@ export default function TicTacToe() {
 					onHandleClickButton={handleResetRound}
 				/>
 			)}
-			{roundsPlayed === totalRoundsToPlay && (
+			{roundsPlayed >= totalRoundsToPlay && (
 				<EndingScreen
 					winner={winner}
 					onHandleClickButton={handleResetMatch}

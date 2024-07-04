@@ -16,56 +16,56 @@ export default function EndingScreen({
 	scoreB,
 }) {
 	const retryLabels = [
-		'Try Again! The AI is Waiting!',
-		'One More Round?',
-		'Give It Another Go!',
-		'Can You Beat the AI This Time?',
-		"Retry and Show the AI Who's Boss!",
-		'Up for Another Challenge?',
-		'Another Round Awaits!',
-		'Think You Can Win Now?',
-		"Don't Let the AI Win! Try Again!",
-		'Ready for a Rematch?',
-		'Go Again and Beat the AI!',
-		'Retry! You Got This!',
-		'One More Shot at Victory?',
-		'Can You Outplay the AI Now?',
-		"Don't Give Up! Try Again!",
-		"Let's Play Again!",
-		'Another Chance to Win!',
-		'Can You Defeat the AI This Time?',
-		'Up for the Challenge Again?',
-		'Give It Another Try!',
-		'Ready for Another Round?',
-		'Go for It! Try Again!',
-		"Show the AI What You've Got!",
-		"Don't Let the AI Have All the Fun!",
-		'Think You Can Win This Time?',
-		'Try Again and Win!',
-		'One More Try for Victory!',
-		'Can You Outsmart the AI?',
-		"Don't Give Up Yet! Try Again!",
-		'Rematch! You Can Win!',
-		'Give It Another Shot!',
-		'Play Again and Beat the AI!',
-		"Don't Let the AI Win Again!",
-		'Think You Can Win Now?',
-		'Try Again and Show Your Skills!',
-		'Ready to Beat the AI?',
-		'Another Chance to Shine!',
-		'Go for the Win! Try Again!',
-		"Show the AI Who's Boss!",
-		"Don't Let the AI Have the Last Laugh!",
-		'Ready for a Rematch?',
-		'Play Again and Win!',
-		'Can You Beat the AI This Time?',
-		'One More Round for Glory!',
-		"Don't Give Up! Try Again!",
-		'Give It Another Go!',
-		'Show the AI What You Can Do!',
-		'Think You Can Win Now?',
-		'Go for the Win! Try Again!',
-		'Ready for Another Challenge?',
+		'¡Inténtalo de nuevo! ¡La IA te está esperando!',
+		'¿Una ronda más?',
+		'¡Dale otra oportunidad!',
+		'¿Puedes vencer a la IA esta vez?',
+		'¡Reintenta y demuestra a la IA quién manda!',
+		'¿Listo para otro desafío?',
+		'¡Te espera otra ronda!',
+		'¿Crees que puedes ganar ahora?',
+		'¡No dejes que la IA gane! ¡Inténtalo de nuevo!',
+		'¿Listo para la revancha?',
+		'¡Vuelve a intentarlo y vence a la IA!',
+		'¡Reintenta! ¡Tú puedes!',
+		'¿Una oportunidad más para la victoria?',
+		'¿Puedes superar a la IA ahora?',
+		'¡No te rindas! ¡Inténtalo de nuevo!',
+		'¡Vamos a jugar otra vez!',
+		'¡Otra oportunidad de ganar!',
+		'¿Puedes derrotar a la IA esta vez?',
+		'¿Listo para el desafío de nuevo?',
+		'¡Dale otra oportunidad!',
+		'¿Listo para otra ronda?',
+		'¡Adelante! ¡Inténtalo de nuevo!',
+		'¡Muestra a la IA lo que tienes!',
+		'¡No dejes que la IA se divierta toda!',
+		'¿Crees que puedes ganar esta vez?',
+		'¡Inténtalo de nuevo y gana!',
+		'¡Un intento más para la victoria!',
+		'¿Puedes engañar a la IA?',
+		'¡No te rindas todavía! ¡Inténtalo de nuevo!',
+		'¡Revancha! ¡Tú puedes ganar!',
+		'¡Dale otro intento!',
+		'¡Juega de nuevo y vence a la IA!',
+		'¡No dejes que la IA gane de nuevo!',
+		'¿Crees que puedes ganar ahora?',
+		'¡Inténtalo de nuevo y muestra tus habilidades!',
+		'¿Listo para vencer a la IA?',
+		'¡Otra oportunidad para brillar!',
+		'¡Ve por la victoria! ¡Inténtalo de nuevo!',
+		'¡Demuestra a la IA quién manda!',
+		'¡No dejes que la IA tenga la última risa!',
+		'¿Listo para la revancha?',
+		'¡Juega de nuevo y gana!',
+		'¿Puedes vencer a la IA esta vez?',
+		'¡Una ronda más para la gloria!',
+		'¡No te rindas! ¡Inténtalo de nuevo!',
+		'¡Dale otra oportunidad!',
+		'¡Muestra a la IA lo que puedes hacer!',
+		'¿Crees que puedes ganar ahora?',
+		'¡Ve por la victoria! ¡Inténtalo de nuevo!',
+		'¿Listo para otro desafío?',
 	]
 
 	const [retryLabel, setRetryLabel] = useState('')
@@ -107,15 +107,17 @@ export default function EndingScreen({
 			<section className="endingContainer">
 				<div className="endingCard">
 					<h2>
-						{scoreA < scoreB && <>You Lose!</>}
-						{scoreA === scoreB && <>It's a Draw</>}
-						{scoreA > scoreB && <>You Win!</>}
+						{scoreA < scoreB && <>!Haz perdido!</>}
+						{scoreA === scoreB && <>¡Es empate!</>}
+						{scoreA > scoreB && <>¡Vaya Ganaste!</>}
 					</h2>
 
 					<TypewriterComponent
 						text={retryLabels[currentLabelIndex]}
 					/>
-					<button onClick={onHandleClickButton}>Retry!!!</button>
+					<button onClick={onHandleClickButton} className="btnYep">
+						Intentar Nuevamente!!!
+					</button>
 				</div>
 			</section>
 		</>

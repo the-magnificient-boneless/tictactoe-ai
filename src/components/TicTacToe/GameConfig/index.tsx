@@ -12,7 +12,7 @@ interface GameConfigProps {
 }
 
 function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
-	const [totalRoundsToPlay, setTotalGames] = useState(1)
+	const [totalRoundsToPlay, setTotalGames] = useState(3)
 	const [symbol, setSymbol] = useState('')
 	const [step, setStep] = useState(1)
 	const [label, setLabel] = useState('')
@@ -265,7 +265,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						<label htmlFor="roundsSlider">Rondas</label>
 					</div>
 					<p>
-						<button onClick={() => setStep(2)} className="start">
+						<button onClick={() => setStep(2)} className="btnYep">
 							Siguiente
 						</button>
 						<br />
@@ -297,22 +297,22 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 					</button>
 					<p>
 						{errorMessage && (
-							<span className="error-message">
+							<span className="error error-message">
 								{' '}
 								⛔️ {errorMessage}
 							</span>
 						)}
 					</p>
 					<p>
-						<button onClick={handleStart} className="start">
+						<button onClick={handleStart} className="btnYep">
 							¡Comenzar!
 						</button>
 						<br />
 					</p>
 					<p>
-						<button onClick={() => setStep(1)} className="steps">
+						<button onClick={() => setStep(1)} className="btnNoup">
 							{' '}
-							⬅️ Paso Anterior
+							⬅️ Regresar
 						</button>
 						<br />
 					</p>
@@ -321,9 +321,18 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 		</section>
 	) : (
 		<>
+			<p>
+				{' '}
+				<img
+					src="./Globant-LightBG-Color.png"
+					className="logo"
+					alt="React logo"
+				/>
+			</p>
+			<p>Para continuar ingresa tus datos</p>
 			<form onSubmit={handleSubmit}>
 				<div>
-					<label htmlFor="nombre">Nombre:</label>
+					<label htmlFor="nombre">Nombre*</label>
 					<input
 						type="text"
 						id="nombre"
@@ -332,11 +341,13 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						onChange={handleChange}
 						className="textField"
 					/>
-					{errors.nombre && <span>{errors.nombre}</span>}
+					{errors.nombre && (
+						<span className="error">{errors.nombre}</span>
+					)}
 				</div>
 
 				<div>
-					<label htmlFor="email">Email:</label>
+					<label htmlFor="email">Email*</label>
 					<input
 						type="email"
 						id="email"
@@ -345,12 +356,15 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						onChange={handleChange}
 						className="textField"
 					/>
-					{errors.email && <span>{errors.email}</span>}
+					{errors.email && (
+						<span className="error">{errors.email}</span>
+					)}
 				</div>
 				<div>
 					<label htmlFor="representaEmpresa">
 						¿Representas alguna empresa?
 					</label>
+
 					<input
 						type="checkbox"
 						id="representaEmpresa"
@@ -358,10 +372,12 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						checked={formData.representaEmpresa}
 						onChange={handleChange}
 					/>
+					<br />
 				</div>
 
 				{formData.representaEmpresa && (
 					<>
+						<br />
 						<div>
 							<label htmlFor="nombreEmpresa">
 								Nombre de la empresa:
@@ -375,7 +391,9 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 								className="textField"
 							/>
 							{errors.nombreEmpresa && (
-								<span>{errors.nombreEmpresa}</span>
+								<span className="error">
+									{errors.nombreEmpresa}
+								</span>
 							)}
 						</div>
 						<div>
@@ -391,7 +409,8 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						</div>
 					</>
 				)}
-				<button type="submit" className="btnYep" onClick={handleSubmit}>
+				<br />
+				<button type="submit" className="btnYep">
 					{isLoading ? 'Guardando...' : 'Enviar'}
 				</button>
 			</form>
