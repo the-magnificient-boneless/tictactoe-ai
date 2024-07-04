@@ -23,7 +23,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 	const [step, setStep] = useState(1)
 	const [label, setLabel] = useState('')
 	const [errorMessage, setErrorMessage] = useState('')
-	const [showForm, setShowForm] = useState(true)
+	const [showForm, setShowForm] = useState(false)
 	/*FORM*/
 	const [formData, setFormData] = useState({
 		nombre: '',
