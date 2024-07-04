@@ -410,7 +410,11 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 					</>
 				)}
 				<br />
-				<button type="submit" className="btnYep">
+				<button
+					type="submit"
+					className="btnYep"
+					onClick={() => setShowForm(false)}
+				>
 					{isLoading ? 'Guardando...' : 'Enviar'}
 				</button>
 			</form>
