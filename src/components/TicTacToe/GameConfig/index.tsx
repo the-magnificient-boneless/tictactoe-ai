@@ -56,7 +56,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 
 			try {
 				const response = await fetch(
-					'http://us-east-1.aws.data.mongodb-api.com/app/data-eviphyj/endpoint/data/v1/action/insertOne',
+					'https://us-east-1.aws.data.mongodb-api.com/app/data-eviphyj/endpoint/data/v1/action/insertOne',
 					{
 						method: 'POST',
 						headers: {
