@@ -1,10 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import Typewriter from 'typewriter-effect/dist/core'
+
+import TypewriterComponent from '../Typewriter'
 import Fireworks from '../Fireworks'
+import RainEffect from '../RainEffect'
+import ParticlesEffect from '../ParticlesEffect'
 
 import './EndingScreen.css'
 
-export default function EndingScreen({ onHandleClickButton, scores, player }) {
+export default function EndingScreen({
+	winner,
+	onHandleClickButton,
+	scoreA,
+	scoreB,
+}) {
 	const retryLabels = [
 		'Try Again! The AI is Waiting!',
 		'One More Round?',
@@ -59,27 +69,52 @@ export default function EndingScreen({ onHandleClickButton, scores, player }) {
 	]
 
 	const [retryLabel, setRetryLabel] = useState('')
+	const [currentLabelIndex, setCurrentLabelIndex] = useState(0)
+
+	const typewriterRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		setRetryLabel(
-			retryLabels[Math.floor(Math.random() * retryLabels.length)],
-		)
-	}, [])
+		const randomIndex = Math.floor(Math.random() * retryLabels.length)
+		setCurrentLabelIndex(randomIndex) // Store the index, not the label itself
+
+		if (typewriterRef.current) {
+			const typewriter = new Typewriter(typewriterRef.current, {
+				strings: [retryLabels[randomIndex]], // Single string for this effect
+				autoStart: true,
+				loop: true, // No loop for this effect
+				delay: 50, // Adjust typing speed if needed
+			})
+
+			typewriter.deleteAll().start() // Clear any previous text
+
+			// Change label after the effect finishes
+			typewriter.once('complete', () => {
+				setTimeout(() => {
+					const newIndex = (randomIndex + 1) % retryLabels.length
+					setCurrentLabelIndex(newIndex)
+				}, 3000) // 3-second delay before next change
+			})
+		}
+	}, [currentLabelIndex])
 
 	return (
 		<>
-			<Fireworks />
+			{/*{scores.scoresA <= scores.scoresB ? <RainEffect /> : <Fireworks />}*/}
+			{scoreA < scoreB && <RainEffect />}
+			{scoreA === scoreB && <ParticlesEffect />}
+			{scoreA > scoreB && <Fireworks />}
 
 			<section className="endingContainer">
 				<div className="endingCard">
-					<h1>
-						Player{' '}
-						{scores.scoresA > scores.scoresB
-							? player.HUMAN
-							: player.AI}{' '}
-						Won!
-					</h1>
-					<h2>{retryLabel}</h2>
+					<h2>
+						{scoreA < scoreB && <>You Lose!</>}
+						{scoreA === scoreB && <>It's a Draw</>}
+						{scoreA > scoreB && <>You Win!</>}
+					</h2>
+
+					<TypewriterComponent
+						text={retryLabels[currentLabelIndex]}
+					/>
 					<button onClick={onHandleClickButton}>Retry!!!</button>
 				</div>
 			</section>
@@ -88,7 +123,6 @@ export default function EndingScreen({ onHandleClickButton, scores, player }) {
 }
 
 EndingScreen.propTypes = {
-	player: PropTypes.any.isRequired,
-	scores: PropTypes.array.isRequired,
+	winner: PropTypes.any.isRequired,
 	onHandleClickButton: PropTypes.func.isRequired,
 }
