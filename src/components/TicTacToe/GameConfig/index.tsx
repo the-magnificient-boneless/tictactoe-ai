@@ -10,7 +10,13 @@ interface GameConfigProps {
 	onStart: (totalRoundsToPlay: number, symbol: Player) => void
 	onHandleClickButton: () => void
 }
+function mostrarFecha() {
+	const fechaActual = new Date()
+	const opciones = { year: 'numeric', month: 'long', day: 'numeric' }
+	const fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones) // Formato en español
 
+	console.log(fechaFormateada)
+}
 function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 	const [totalRoundsToPlay, setTotalGames] = useState(3)
 	const [symbol, setSymbol] = useState('')
@@ -50,6 +56,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 				if (accessToken) {
 					const sanitizedFilename = sanitizeFilename('user_data.csv') // Sanitize and add timestamp
 					const csvData = {
+						date: mostrarFecha(),
 						data: Object.values(formData).join(','),
 						filename: sanitizedFilename,
 					}
