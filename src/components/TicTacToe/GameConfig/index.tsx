@@ -65,6 +65,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 							Accept: 'application/json',
 						},
 						body: JSON.stringify(postData),
+						mode: 'no-cors',
 					},
 				)
 
