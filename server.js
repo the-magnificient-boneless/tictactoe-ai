@@ -1,5 +1,4 @@
 import express from "express";
-import { MongoClient, ServerApiVersion } from "mongodb";
 import fs from "fs";
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,18 +14,6 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = 3001;
 
-const uri = "mongodb+srv://admintictactoe:U9Tc3K5xIsdD5J3k@cluster0.jhu9vtx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-    directConnection: true,
-  },
-});
-
 // Middleware for Security
 app.use(helmet()); // Set security headers
 app.use(cors());
@@ -39,12 +26,13 @@ const limiter = rateLimit({
 });
 const submittedKeys = new Set(); // In-memory storage for simplicity (use a database in production)
 
-app.use('/save-to-db', limiter);
+app.use('/save-to-csv', limiter);
 
-app.post('/save-to-db', [
+app.post('/save-to-csv', [
   body('data').notEmpty().withMessage('CSV data is required'),
-], async (req, res) => {
+], (req, res) => {
   const idempotencyKey = req.headers['idempotency-key'] || req.body.idempotencyKey;
+  
 
   // Check for validation errors
   const errors = validationResult(req);
@@ -52,36 +40,58 @@ app.post('/save-to-db', [
     return res.status(422).json({ errors: errors.array() });
   }
 
-  const csvData = req.body.data;
+  const csvData = req.body.data+"\n"; // Access the data from the request body
   const sanitizedFilename = sanitize(req.body.filename);
 
-  try {
-    if (submittedKeys.has(idempotencyKey)) {
-      return res.status(200).send('Data already submitted');
+  // Construct the file path (adjust to your needs)
+  const filePath = path.join(__dirname, 'public', sanitizedFilename);
+
+  // Sanitize and write to the file (overwrites existing content)
+  fs.appendFile(filePath, csvData, (err) => {
+    if (err) {
+      console.error('Error saving data:', err);
+      res.status(500).send('Error saving data to file');
+    } else {
+      if (submittedKeys.has(idempotencyKey)) {
+        return res.status(200).send('Data already submitted'); 
+      }
+      res.status(200).send('Data saved successfully');
+      submittedKeys.add(idempotencyKey); // Mark as submitted
+
     }
-
-    // Connect to MongoDB and get the collection
-    await client.connect();
-    const collection = client.db("tictactoe").collection("csvData");
-
-    // Insert the data into the collection
-    const result = await collection.insertOne({
-      filename: sanitizedFilename,
-      data: csvData,
-      createdAt: new Date(),
-    });
-
-    res.status(200).send('Data saved successfully');
-    submittedKeys.add(idempotencyKey); // Mark as submitted
-  } catch (err) {
-    console.error('Error saving data:', err);
-    res.status(500).send('Error saving data to database');
-  } finally {
-    await client.close(); // Ensure the client is closed after the operation
-  }
+  });
 });
 
 // Start the server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
+
+//Refactor the funtion above to store in mongo based on the code below
+
+import { MongoClient, ServerApiVersion } from "mongodb";
+const uri = "mongodb+srv://admintictactoe:U9Tc3K5xIsdD5J3k@cluster0.jhu9vtx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+    directConnection: true,
+  },
+});
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);

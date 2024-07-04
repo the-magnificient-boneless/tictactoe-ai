@@ -43,19 +43,19 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 
 		if (Object.keys(validationErrors).length === 0) {
 			const sanitizedFilename = sanitizeFilename('user_data.csv') // Sanitize and add timestamp
-			const dataToSend = {
-				data: formData, // Send the entire formData object
+			const csvData = {
+				data: Object.values(formData).join(','),
 				filename: sanitizedFilename,
 			}
 
 			try {
 				const response = await fetch(
-					'http://localhost:3001/save-to-db',
+					'http://localhost:3001/save-to-csv',
 					{
 						// Replace with your actual API endpoint
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(dataToSend),
+						body: JSON.stringify(csvData),
 					},
 				)
 
@@ -69,7 +69,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						email: '',
 					})
 					setShowForm(false)
-					console.log('Data sent to server successfully')
+					console.log('CSV data sent to server successfully')
 					// Clear form fields or show success message
 				} else {
 					const errorData = await response.json()
@@ -85,6 +85,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 			setErrors(validationErrors)
 		}
 	}
+
 	function sanitizeFilename(filename) {
 		// Remove invalid characters or replace them with underscores
 		return filename.replace(/[^a-z0-9_.-]/gi, '_')
