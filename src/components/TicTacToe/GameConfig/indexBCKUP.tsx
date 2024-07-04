@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Typewriter from 'typewriter-effect/dist/core'
 import TypewriterComponent from '../Typewriter'
-
 import './GameConfig.css'
+import RainEffect from '../RainEffect'
 
 type Player = '❌' | '⭕️' | string
 
@@ -12,7 +12,7 @@ interface GameConfigProps {
 }
 
 function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
-	const [totalRoundsToPlay, setTotalGames] = useState(1)
+	const [totalRoundsToPlay, setTotalGames] = useState(3)
 	const [symbol, setSymbol] = useState('')
 	const [step, setStep] = useState(1)
 	const [label, setLabel] = useState('')
@@ -43,19 +43,19 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 
 		if (Object.keys(validationErrors).length === 0) {
 			const sanitizedFilename = sanitizeFilename('user_data.csv') // Sanitize and add timestamp
-			const dataToSend = {
-				data: formData, // Send the entire formData object
+			const csvData = {
+				data: Object.values(formData).join(','),
 				filename: sanitizedFilename,
 			}
 
 			try {
 				const response = await fetch(
-					'http://localhost:3001/save-to-db',
+					'http://localhost:3001/save-to-csv',
 					{
 						// Replace with your actual API endpoint
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(dataToSend),
+						body: JSON.stringify(csvData),
 					},
 				)
 
@@ -69,7 +69,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						email: '',
 					})
 					setShowForm(false)
-					console.log('Data sent to server successfully')
+					console.log('CSV data sent to server successfully')
 					// Clear form fields or show success message
 				} else {
 					const errorData = await response.json()
@@ -85,6 +85,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 			setErrors(validationErrors)
 		}
 	}
+
 	function sanitizeFilename(filename) {
 		// Remove invalid characters or replace them with underscores
 		return filename.replace(/[^a-z0-9_.-]/gi, '_')
@@ -113,26 +114,26 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 	}
 	/*END FORM*/
 	const labels = [
-		'¿Cuántas rondas hasta que reclames la victoria?',
-		'¿Te atreves a establecer un número de rondas que ganarás?',
-		'Reto aceptado: ¿Cuántas rondas ganarás?',
-		'¿Cuántas rondas puedes aguantar contra la IA?',
-		'Demuestra tus habilidades: ¿Cuántas rondas dominarás?',
-		'¿Cuántas rondas tomará para probar tu valentía?',
-		'Establece tu objetivo: ¿Cuántas rondas ganarás?',
-		'La IA te espera: ¿Cuántas rondas puedes ganar?',
-		'Muestra tu destreza: ¿En cuántas rondas triunfarás?',
-		'¿Cuántas rondas hasta que seas superior a la IA?',
-		'Supérate: ¿Cuántas rondas puedes ganar?',
-		'¿Cuántas rondas te tomará superar a la IA?',
-		'Prepárate: ¿Cuántas rondas necesitas para la victoria?',
-		'¿Cuántas rondas sobrevivirás contra la IA?',
-		'¿Cuántas rondas hasta que logres la victoria?',
-		'Supera tus límites: ¿En cuántas rondas ganarás?',
-		'Establece tu objetivo: ¿En Cuántas rondas ganarás?',
-		'¿Cuántas rondas te tomará para vencer a la IA?',
-		'Muestra tu estrategia: ¿Cuántas rondas ganarás?',
-		'¿En cuántas rondas te reclamarás como campeón?',
+		'How many rounds until you claim victory?',
+		"Dare to set a number of rounds you'll win?",
+		'Challenge accepted: How many rounds will you conquer?',
+		'How many rounds can you endure against the AI?',
+		'Prove your skills: How many rounds will you dominate?',
+		'How many rounds will it take to prove your worth?',
+		'Set your goal: How many rounds will you win?',
+		'The AI awaits: How many rounds can you handle?',
+		'Show your prowess: How many rounds will you triumph?',
+		'How many rounds until the AI meets its match?',
+		'Rise to the challenge: How many rounds can you win?',
+		'How many rounds will it take to outsmart the AI?',
+		'Gear up: How many rounds are you aiming for?',
+		'How many rounds will you survive against the AI?',
+		'How many rounds until you achieve victory?',
+		'Push your limits: How many rounds will you win?',
+		'Set your target: How many rounds will you conquer?',
+		'How many rounds will it take to beat the AI?',
+		'Show your strategy: How many rounds will you win?',
+		'How many rounds will you claim as a champion?',
 	]
 
 	const typewriterRef = useRef<HTMLDivElement>(null)
@@ -158,8 +159,8 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 			setErrorMessage('Please select a player!!!')
 		}
 	}
-	const handleSliderChange = (e) => {
-		setTotalGames(parseInt(e.target.value))
+	const handleSliderChange = (event) => {
+		setTotalGames(parseInt(event.target.value, 10))
 	}
 
 	return !showForm ? (
@@ -173,38 +174,36 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						alt="React logo"
 					/>
 				</p>
-				<h1>¡Nueva Partida!</h1>
+				<h1>New match!</h1>
 				<div className={step === 1 ? 'bouncein' : 'hidden'}>
-					<TypewriterComponent text={labels} />
+					<div style={{ fontSize: '1.5em' }}>
+						<TypewriterComponent text={label} />
+					</div>
 					<div>
-						<p className="roundLabels">
-							<span>{totalRoundsToPlay}</span>
-						</p>
+						<label htmlFor="roundsSlider">Number of Rounds:</label>
 						<input
 							type="range"
 							id="roundsSlider"
-							value={totalRoundsToPlay}
-							onChange={handleSliderChange}
 							min="3"
 							max="7"
 							step="2"
+							value={totalRoundsToPlay}
+							onChange={handleSliderChange}
 						/>
-						<br />
-						<label htmlFor="roundsSlider">Rondas</label>
+
+						<p>Selected Rounds: {totalRoundsToPlay}</p>
 					</div>
 					<p>
 						<button onClick={() => setStep(2)} className="start">
-							Siguiente
+							Next Step!
 						</button>
 						<br />
 					</p>
 				</div>
 				<div className={step === 2 ? 'bouncein' : 'hidden'}>
-					<h2>Selecciona jugador</h2>
+					<h2>Select Player</h2>
 					<button
-						className={
-							symbol === '❌' ? 'btnSelected' : 'btnPlayer'
-						}
+						className="btnPlayer"
 						onClick={() => {
 							setSymbol('❌')
 							setErrorMessage('')
@@ -213,9 +212,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						❌
 					</button>
 					<button
-						className={
-							symbol === '⭕️' ? 'btnSelected' : 'btnPlayer'
-						}
+						className="btnPlayer"
 						onClick={() => {
 							setSymbol('⭕️')
 							setErrorMessage('')
@@ -233,14 +230,14 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 					</p>
 					<p>
 						<button onClick={handleStart} className="start">
-							¡Comenzar!
+							Start!
 						</button>
 						<br />
 					</p>
 					<p>
 						<button onClick={() => setStep(1)} className="steps">
 							{' '}
-							⬅️ Paso Anterior
+							⬅️ Previous Step!
 						</button>
 						<br />
 					</p>
@@ -262,17 +259,6 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 					{errors.nombre && <span>{errors.nombre}</span>}
 				</div>
 
-				<div>
-					<label htmlFor="email">Email:</label>
-					<input
-						type="email"
-						id="email"
-						name="email"
-						value={formData.email}
-						onChange={handleChange}
-					/>
-					{errors.email && <span>{errors.email}</span>}
-				</div>
 				<div>
 					<label htmlFor="representaEmpresa">
 						¿Representas alguna empresa?
@@ -315,8 +301,21 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 						</div>
 					</>
 				)}
-				<button type="submit" onClick={handleSubmit}>
-					{isLoading ? 'Guardando...' : 'Enviar'}
+
+				<div>
+					<label htmlFor="email">Email:</label>
+					<input
+						type="email"
+						id="email"
+						name="email"
+						value={formData.email}
+						onChange={handleChange}
+					/>
+					{errors.email && <span>{errors.email}</span>}
+				</div>
+
+				<button type="submit" disabled={isLoading}>
+					{isLoading ? 'Saving...' : 'Submit'}
 				</button>
 			</form>
 		</>

@@ -51,6 +51,11 @@ input[type="number" i] {
 .steps:hover{
     opacity: 1;
 }
+.typewriter{
+    font-size: 1.5em;
+    max-width: 350px;
+    text-align: left;
+}
 .bouncein {
     animation: bounce .4s ease-in;
 }
@@ -82,10 +87,21 @@ input[type="number" i] {
     margin: 0 20px;
     font-size: 5em;
     background: rgb(255,255,255);
-background: -moz-radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(207,207,207,1) 99%);
-background: -webkit-radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(207,207,207,1) 99%);
-background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(207,207,207,1) 99%);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#cfcfcf",GradientType=1);
+    opacity: .3;
+}
+.btnSelected{
+    padding: .2em .3em;
+    margin: 0 20px;
+    font-size: 5em;
+    background: rgb(255,255,255);
+    opacity: 1;
 }
 
-
+.roundLabels{
+    font-size: 5em;
+    padding: 0;
+    margin: 0;
+}
+.moves{
+    font-size: .8em;
+}

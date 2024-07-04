@@ -1,0 +1,107 @@
+{
+    "en": {
+      "components": {
+        "gameConfig": {
+          "messages": {
+            "selectPlayerError": "Please select a player!!!",
+            "newMatch": "New match!",
+            "nextStep": "Next Step!",
+            "previousStep": "⬅️ Previous Step!",
+            "start": "Start!",
+            "labels": [
+              "How many rounds until you claim victory?",
+              "Dare to set a number of rounds you'll win?",
+              "Challenge accepted: How many rounds will you conquer?",
+              "How many rounds can you endure against the AI?",
+              "Prove your skills: How many rounds will you dominate?",
+              "How many rounds will it take to prove your worth?",
+              "Set your goal: How many rounds will you win?",
+              "The AI awaits: How many rounds can you handle?",
+              "Show your prowess: How many rounds will you triumph?",
+              "How many rounds until the AI meets its match?",
+              "Rise to the challenge: How many rounds can you win?",
+              "How many rounds will it take to outsmart the AI?",
+              "Gear up: How many rounds are you aiming for?",
+              "How many rounds will you survive against the AI?",
+              "How many rounds until you achieve victory?",
+              "Push your limits: How many rounds will you win?",
+              "Set your target: How many rounds will you conquer?",
+              "How many rounds will it take to beat the AI?",
+              "Show your strategy: How many rounds will you win?",
+              "How many rounds will you claim as a champion?"
+            ]
+          }
+        }
+      }
+    },
+    "es": {
+      "components": {
+        "gameConfig": {
+          "messages": {
+            "selectPlayerError": "¡Por favor selecciona un jugador!",
+            "newMatch": "¡Nuevo partido!",
+            "nextStep": "¡Siguiente paso!",
+            "previousStep": "⬅️ Paso anterior!",
+            "start": "¡Comenzar!",
+            "labels": [
+              "¿Cuántas rondas hasta que reclames la victoria?",
+              "¿Te atreves a establecer un número de rondas que ganarás?",
+              "Reto aceptado: ¿Cuántas rondas conquistarás?",
+              "¿Cuántas rondas puedes soportar contra la IA?",
+              "Demuestra tus habilidades: ¿Cuántas rondas dominarás?",
+              "¿Cuántas rondas tomará probar tu valía?",
+              "Establece tu objetivo: ¿Cuántas rondas ganarás?",
+              "La IA espera: ¿Cuántas rondas puedes manejar?",
+              "Muestra tu destreza: ¿Cuántas rondas triunfarás?",
+              "¿Cuántas rondas hasta que la IA encuentre su igual?",
+              "Supérate: ¿Cuántas rondas puedes ganar?",
+              "¿Cuántas rondas tomará vencer a la IA?",
+              "Prepárate: ¿Cuántas rondas estás apuntando?",
+              "¿Cuántas rondas sobrevivirás contra la IA?",
+              "¿Cuántas rondas hasta que logres la victoria?",
+              "Empuja tus límites: ¿Cuántas rondas ganarás?",
+              "Establece tu objetivo: ¿Cuántas rondas conquistarás?",
+              "¿Cuántas rondas tomará vencer a la IA?",
+              "Muestra tu estrategia: ¿Cuántas rondas ganarás?",
+              "¿Cuántas rondas reclamarás como campeón?"
+            ]
+          }
+        }
+      }
+    },
+    "fr": {
+      "components": {
+        "gameConfig": {
+          "messages": {
+            "selectPlayerError": "Veuillez sélectionner un joueur !!!",
+            "newMatch": "Nouveau match !",
+            "nextStep": "Étape suivante !",
+            "previousStep": "⬅️ Étape précédente !",
+            "start": "Démarrer !",
+            "labels": [
+              "Combien de rounds avant de revendiquer la victoire ?",
+              "Osez fixer un nombre de rounds que vous allez gagner ?",
+              "Défi accepté : Combien de rounds allez-vous conquérir ?",
+              "Combien de rounds pouvez-vous endurer contre l'IA ?",
+              "Prouvez vos compétences : Combien de rounds allez-vous dominer ?",
+              "Combien de rounds faudra-t-il pour prouver votre valeur ?",
+              "Fixez votre objectif : Combien de rounds allez-vous gagner ?",
+              "L'IA vous attend : Combien de rounds pouvez-vous gérer ?",
+              "Montrez votre habileté : Combien de rounds allez-vous triompher ?",
+              "Combien de rounds jusqu'à ce que l'IA trouve son adversaire à sa hauteur ?",
+              "Relevez le défi : Combien de rounds pouvez-vous gagner ?",
+              "Combien de rounds faudra-t-il pour déjouer l'IA ?",
+              "Préparez-vous : Combien de rounds visez-vous ?",
+              "Combien de rounds survivrez-vous contre l'IA ?",
+              "Combien de rounds avant d'atteindre la victoire ?",
+              "Poussez vos limites : Combien de rounds allez-vous gagner ?",
+              "Fixez votre objectif : Combien de rounds allez-vous conquérir ?",
+              "Combien de rounds faudra-t-il pour battre l'IA ?",
+              "Montrez votre stratégie : Combien de rounds allez-vous gagner ?",
+              "Combien de rounds allez-vous revendiquer en tant que champion ?"
+            ]
+          }
+        }
+      }
+    }
+  }

@@ -1,5 +1,6 @@
 body,html{
   user-select: none;
+  color: #FFF;
   background: rgb(73,73,73);
   background: -moz-radial-gradient(circle, rgba(73,73,73,1) 0%, rgba(0,0,0,1) 99%);
   background: -webkit-radial-gradient(circle, rgba(73,73,73,1) 0%, rgba(0,0,0,1) 99%);
