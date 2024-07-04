@@ -63,7 +63,6 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 							apiKey: 's8QHGkHLPusaUszTrgAISLsymasmQmiufxYlctngOsERSgHuffrXMhcTmdhHT9ki',
 							'Content-Type': 'application/json',
 							Accept: 'application/json',
-							'Access-Control-Request-Headers': '*',
 						},
 						body: JSON.stringify(postData),
 					},
