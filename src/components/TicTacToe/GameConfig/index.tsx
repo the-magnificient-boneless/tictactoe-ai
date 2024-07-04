@@ -18,7 +18,7 @@ function mostrarFecha() {
 	console.log(fechaFormateada)
 }
 function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
-	const [totalRoundsToPlay, setTotalGames] = useState(3)
+	const [totalRoundsToPlay, setTotalGames] = useState(1)
 	const [symbol, setSymbol] = useState('')
 	const [step, setStep] = useState(1)
 	const [label, setLabel] = useState('')
@@ -264,7 +264,7 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 							id="roundsSlider"
 							value={totalRoundsToPlay}
 							onChange={handleSliderChange}
-							min="3"
+							min={totalRoundsToPlay}
 							max="7"
 							step="2"
 						/>
