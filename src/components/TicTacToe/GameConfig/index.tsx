@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Typewriter from 'typewriter-effect/dist/core'
 import TypewriterComponent from '../Typewriter'
+import { MongoClient, ServerApiVersion } from 'mongodb'
 
 import './GameConfig.css'
 
@@ -37,6 +38,8 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 		}))
 	}
 
+	// Import MongoDB Client and Nodemailer
+
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		const validationErrors = validateForm()
@@ -50,34 +53,42 @@ function GameConfig({ onStart, onHandleClickButton }: GameConfigProps) {
 
 			try {
 				const response = await fetch(
-					'http://localhost:3001/save-to-csv',
+					'https://us-east-1.aws.data.mongodb-api.com/app/data-zlgaoxd/endpoint/data/v1/action/findOne',
 					{
-						// Replace with your actual API endpoint
 						method: 'POST',
-						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(csvData),
+						headers: {
+							'Content-Type': 'application/json',
+							'Access-Control-Request-Headers': '*',
+							'api-key':
+								'kjINnVzjtmVJq9lxqEnBoZrFacILdS6N3N384zSi53b01dtKvInIN7MKGr0Ogl78',
+						},
+						body: JSON.stringify({
+							collection: 'csvData',
+							database: 'tictactoe',
+							dataSource: 'Cluster0',
+							projection: { _id: 1 },
+							document: csvData,
+						}),
 					},
 				)
 
-				if (response.ok) {
-					setIsLoading(false) // Hide loading state
-					setFormData({
-						nombre: '',
-						representaEmpresa: false,
-						nombreEmpresa: '',
-						cargo: '',
-						email: '',
-					})
-					setShowForm(false)
-					console.log('CSV data sent to server successfully')
-					// Clear form fields or show success message
-				} else {
-					const errorData = await response.json()
-					console.error(
-						'Error saving data:',
-						errorData.errors || 'Unknown error',
-					)
+				if (!response.ok) {
+					throw new Error('Network response was not ok')
 				}
+
+				const result = await response.json()
+				console.log('Data inserted into MongoDB:', result)
+
+				setIsLoading(false) // Hide loading state
+				setFormData({
+					nombre: '',
+					representaEmpresa: false,
+					nombreEmpresa: '',
+					cargo: '',
+					email: '',
+				})
+				setShowForm(false)
+				console.log('CSV data sent to server successfully')
 			} catch (error) {
 				console.error('Error submitting form or sending data:', error)
 			}
