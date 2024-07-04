@@ -14,6 +14,7 @@ export default function EndingScreen({
 	onHandleClickButton,
 	scoreA,
 	scoreB,
+	draws,
 }) {
 	const retryLabels = [
 		'¡Inténtalo de nuevo! ¡La IA te está esperando!',
@@ -101,13 +102,13 @@ export default function EndingScreen({
 		<>
 			{/*{scores.scoresA <= scores.scoresB ? <RainEffect /> : <Fireworks />}*/}
 			{scoreA < scoreB && <RainEffect />}
-			{scoreA === scoreB && <ParticlesEffect />}
+			{draws > scoreA && draws > scoreB && <ParticlesEffect />}
 			{scoreA > scoreB && <Fireworks />}
 
 			<section className="endingContainer">
 				<div className="endingCard">
 					<h2>
-						{scoreA === scoreB && <>¡Es empate!</>}
+						{draws > scoreA && draws > scoreB && <>¡Es empate!</>}
 						{scoreA < scoreB && <>!Has perdido!</>}
 						{scoreA > scoreB && <>¡Vaya Ganaste!</>}
 					</h2>

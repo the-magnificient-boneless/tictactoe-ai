@@ -401,6 +401,7 @@ export default function TicTacToe() {
 					onHandleClickButton={handleResetMatch}
 					scoreA={scoreA}
 					scoreB={scoreB}
+					draws={draws}
 				/>
 			)}
 		</>

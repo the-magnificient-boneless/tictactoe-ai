@@ -10,10 +10,8 @@ export default function Modal({ show, winner, onHandleClickButton }) {
 	return (
 		<div className="modal-overlay">
 			<div className="modal">
-				<h2>
-					{winner === 'Draw!' ? "It's a Draw!" : `Player ${winner}`}
-				</h2>
-				<h1>{winner === 'Draw!' ? '' : ` Wins!`}</h1>
+				<h2>{winner === 'Draw!' ? '¡Empate!' : `Jugador ${winner}`}</h2>
+				<h1>{winner === 'Draw!' ? '' : `¡Ha ganado!`}</h1>
 				<button onClick={onHandleClickButton} className="btnYepModal">
 					Continue
 				</button>
